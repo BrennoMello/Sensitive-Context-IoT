@@ -44,7 +44,7 @@ public class Reasoner {
         
     		 LOGGER.info("Rationing on the model");
     		
-    		 Model data = FileManager.get().loadModel(fusekiServer,"Turtle");
+    		 Model data = FileManager.get().loadModel(fusekiServer,"TTL");
 		 
     		 GenericRuleReasoner reasoner = null;
 		    
