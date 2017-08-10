@@ -6,6 +6,8 @@
 package br.com.ufba.sensitivecontextiot.inference;
 
 
+import java.io.IOException;
+import java.net.URISyntaxException;
 import org.apache.jena.rdf.model.InfModel;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
@@ -18,21 +20,11 @@ import org.apache.jena.vocabulary.RDFS;
  * @author brenno
  */
 public class Main {
-    public static void main(String [] args){
-        String NS = "urn:x-hp-jena:eg/";
-
-        // Build a trivial example data set
-        Model rdfsExample = ModelFactory.createDefaultModel();
-        Property p = rdfsExample.createProperty(NS, "p");
-        Property q = rdfsExample.createProperty(NS, "q");
-        rdfsExample.add(p, RDFS.subPropertyOf, q);
-        rdfsExample.createResource(NS+"a").addProperty(p, "foo");
-        
-        InfModel inf = ModelFactory.createRDFSModel(rdfsExample);
-        
-        Resource a = inf.getResource(NS+"a");
-        System.out.println("Statement: " + a.getProperty(q));
-        
-        
+    public static void main(String [] args) throws IOException, URISyntaxException{
+                
+        Reasoner reasoner = new Reasoner();
+        reasoner.setAdressPrefix("http://www.loa-cnr.it/ontologies/DUL.owl#");
+        reasoner.setPrefix("j.0");
+        reasoner.reasoner();
     }
 }
