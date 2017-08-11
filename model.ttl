@@ -5,7 +5,7 @@
 @prefix j.1:   <http://purl.oclc.org/NET/ssnx/ssn#> .
 @prefix j.0:   <http://www.loa-cnr.it/ontologies/DUL.owl#> .
 
-{ <http://wiser.dcc.ufba.br/smartUFBA/devices/ufbaino#obsValue_14912503909511491250451054>
+<http://wiser.dcc.ufba.br/smartUFBA/devices/ufbaino#obsValue_14912503909511491250451054>
           a                 j.1:ObservationValue ;
           j.0:hasDataValue  "30"^^xsd:double .
   
@@ -417,4 +417,3 @@
   
   rdf:Bag  a               rdfs:Resource , rdfs:Class ;
           rdfs:subClassOf  rdfs:Container , rdf:Bag .
-}

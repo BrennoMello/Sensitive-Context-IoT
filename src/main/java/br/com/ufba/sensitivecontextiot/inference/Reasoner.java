@@ -6,22 +6,10 @@
 package br.com.ufba.sensitivecontextiot.inference;
 
 import org.apache.jena.rdf.model.*;
-import java.io.PrintWriter;
-import java.util.Iterator;
-import java.util.logging.Logger;
-import org.apache.jena.reasoner.rulesys.GenericRuleReasoner;
-import org.apache.jena.util.FileManager;
-import org.apache.jena.util.PrintUtil;
-import org.apache.jena.reasoner.rulesys.Rule;
-
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URISyntaxException;
 import java.util.Iterator;
-import java.util.Properties;
-
-import org.apache.jena.rdf.model.*;
 import org.apache.jena.reasoner.Derivation;
 import org.apache.jena.reasoner.rulesys.GenericRuleReasoner;
 import org.apache.jena.reasoner.rulesys.Rule;
