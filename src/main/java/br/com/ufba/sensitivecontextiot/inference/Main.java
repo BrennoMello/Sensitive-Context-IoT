@@ -13,8 +13,8 @@ public class Main {
     
     public static void main(String[] args) {
         Reasoner reasoner = new Reasoner();
-        reasoner.setAdressPrefix("http://www.loa-cnr.it/ontologies/DUL.owl#");
-        reasoner.setPrefix("j.0");
+        reasoner.setAdressPrefix("http://purl.org/iot/ontology/fiesta-iot#");
+        reasoner.setPrefix("fie");
         reasoner.reasoner();
     }
 }

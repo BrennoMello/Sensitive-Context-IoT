@@ -57,7 +57,7 @@
   rdfs:comment  a     rdf:Property , rdfs:Resource ;
           rdfs:range  rdfs:Literal .
   
-  rdfs:range  a        rdf:Property , rdfs:Resource ;B
+  rdfs:range  a        rdf:Property , rdfs:Resource ;
           rdfs:domain  rdf:Property ;
           rdfs:range   rdfs:Class .
   

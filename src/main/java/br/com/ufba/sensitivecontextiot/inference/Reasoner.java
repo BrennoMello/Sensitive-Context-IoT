@@ -28,6 +28,10 @@ import org.apache.jena.reasoner.rulesys.Rule;
 import org.apache.jena.util.FileManager;
 import org.apache.jena.util.PrintUtil;
 import java.util.logging.Logger;
+import org.apache.jena.ontology.Individual;
+import org.apache.jena.ontology.ObjectProperty;
+import org.apache.jena.ontology.OntModel;
+import org.apache.jena.ontology.OntModelSpec;
 
 /**
  *
@@ -36,27 +40,36 @@ import java.util.logging.Logger;
 public class Reasoner {
     private final static Logger LOGGER = Logger.getLogger(Reasoner.class.getName());
     
-    private String fusekiServer = "model.ttl";
+    private String fusekiServer = "DataSetWater.owl";
     private String prefix;
     private String adressPrefix;
+    private OntModel ontModel = null;
+
     
     public void reasoner(){
-        
+                 String SOURCE = "http://purl.org/iot/ontology/fiesta-iot";
+		 String NS = SOURCE + "#";
+                
     		 LOGGER.info("Rationing on the model");
     		
-    		 Model data = FileManager.get().loadModel(fusekiServer,"TTL");
+                 ontModel = getOntologyModel(fusekiServer);
+    		 //Model data = FileManager.get().loadModel(fusekiServer,"TTL");
 		 
+                 
+                                  
     		 GenericRuleReasoner reasoner = null;
 		    
-		 PrintUtil.registerPrefix(prefix, adressPrefix);
+		 //PrintUtil.registerPrefix(prefix, adressPrefix);
 		    
-		 String rules = "[rule1: (?a j.0:hasDataValue ?b) greaterThan(?b, 36) -> (?a highTemperature true)]";
-		    
-		 LOGGER.info("Getting rules: " + rules);
+		 String rules;
+                 rules = "[rule1:  (?sensor rdf:type http://purl.org/iot/ontology/fiesta-iot#Water_Flow) (?sensor http://purl.oclc.org/NET/ssnx/ssn#madeObservation ?mdobserv) (?mdobserv http://purl.oclc.org/NET/ssnx/ssn#observationResult ?mdObservResult) (?mdObservResult http://purl.org/iot/ontology/fiesta-iot#hasValue ?outputSensor) (?outputSensor http://www.loa.istc.cnr.it/ontologies/DUL.owl#hasDataValue ?value) swrlb:greaterThan(?value, 0) -> (?sensor http://purl.org/iot/ontology/fiesta-iot#fiesta-iot:hasWaterFlow true)]";
+		 
+                 LOGGER.info("Getting rules: " + rules);
 		    
 		    		  	   
 		    try{
                        reasoner = new GenericRuleReasoner(Rule.parseRules(rules));
+                       
 		    }catch(Exception x){
 		    	x.printStackTrace();
 		    }
@@ -65,47 +78,90 @@ public class Reasoner {
 		   
 		    reasoner.setDerivationLogging(true);
 		    
-		    InfModel inf = ModelFactory.createInfModel(reasoner, data);
-		    
-		    PrintWriter out = new PrintWriter(System.out);
-	
-                    for (StmtIterator i = inf.listStatements(); i.hasNext();) {
-                            Statement s = i.nextStatement();
-                            for (Iterator<Derivation> id = inf.getDerivation(s); id.hasNext(); ) {
-                                           LOGGER.info("Statement is " + s);
-                                       Derivation deriv = (Derivation) id.next();
-                                       deriv.printTrace(out, true);
-                               RDFNode object = s.getObject();
-                               LOGGER.info("Object is " + object.toString());
-                               //updateModel(data, s.getSubject());
-                           }
-                        }
+		    InfModel inf = ModelFactory.createInfModel(reasoner, ontModel);
+                       
+                     StmtIterator stmts = ontModel.getIndividual(NS +"WaterFlow01").listProperties();
+                     while (stmts.hasNext()) {
+                            Statement stmt = stmts.nextStatement();
+                            Resource subject = stmt.getSubject();
+                            Property predicate = stmt.getPredicate();
+                            RDFNode object = stmt.getObject();
+
+                            System.out.print(subject.getLocalName());
+                            System.out.print(" " + predicate.getLocalName() + " ");
+                            if (object instanceof Resource) {
+                                    System.out.print(((Resource) object).getLocalName());
+                            } else {
+                                    System.out.print(" \"" + object.asLiteral().toString() + "\"");
+                            }
+
+                            System.out.println(".");
+
+                    }
                     
-                    out.flush();
-
+                         System.out.println("");
+                    
+                     inf.write(System.out);
+                     
+                   
     }
+    
+    	public static OntModel getOntologyModel(String ontoFile) {
+		OntModel ontModel = ModelFactory.createOntologyModel(OntModelSpec.OWL_DL_MEM_TRANS_INF);
 
-    public String getFusekiServer() {
-        return fusekiServer;
-    }
+		try {
+			ontModel.read("/home/brennomello/NetBeansProjects/Sensitive-Context-IoT/Resources/DataSetWater.owl", null);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 
-    public void setFusekiServer(String fusekiServer) {
-        this.fusekiServer = fusekiServer;
-    }
+		return ontModel;
+	}
 
-    public String getPrefix() {
-        return prefix;
-    }
+    
+        public static void printInference(InfModel inf, Individual individual, ObjectProperty property) {
+                    StmtIterator stmts = inf.listStatements(individual, property, (RDFNode) null);
 
-    public void setPrefix(String prefix) {
-        this.prefix = prefix;
-    }
+                    while (stmts.hasNext()) {
+                            Statement stmt = stmts.nextStatement();
+                            Resource subject = stmt.getSubject();
+                            Property predicate = stmt.getPredicate();
+                            RDFNode object = stmt.getObject();
 
-    public String getAdressPrefix() {
-        return adressPrefix;
-    }
+                            System.out.print(subject.getLocalName());
+                            System.out.print(" " + predicate.getLocalName() + " ");
+                            if (object instanceof Resource) {
+                                    System.out.print(((Resource) object).getLocalName());
+                            } else {
+                                    System.out.print(" \"" + object.asLiteral().toString() + "\"");
+                            }
 
-    public void setAdressPrefix(String adressPrefix) {
-        this.adressPrefix = adressPrefix;
-    }
+                            System.out.println(".");
+
+                    }
+        }
+        
+        public String getFusekiServer() {
+            return fusekiServer;
+        }
+
+        public void setFusekiServer(String fusekiServer) {
+            this.fusekiServer = fusekiServer;
+        }
+
+        public String getPrefix() {
+            return prefix;
+        }
+
+        public void setPrefix(String prefix) {
+            this.prefix = prefix;
+        }
+
+        public String getAdressPrefix() {
+            return adressPrefix;
+        }
+
+        public void setAdressPrefix(String adressPrefix) {
+            this.adressPrefix = adressPrefix;
+        }
 }
