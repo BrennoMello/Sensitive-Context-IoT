@@ -732,6 +732,12 @@ We further acknowledge, testbed provider such as SmartSantander, UniS, KETI, Inr
     
 
 
+    <!-- http://purl.org/iot/ontology/fiesta-iot#hasAlert -->
+
+    <owl:DatatypeProperty rdf:about="http://purl.org/iot/ontology/fiesta-iot#hasAlert"/>
+    
+
+
     <!-- http://purl.org/iot/ontology/fiesta-iot#hasWaterFlow -->
 
     <owl:DatatypeProperty rdf:about="http://purl.org/iot/ontology/fiesta-iot#hasWaterFlow">
@@ -3384,7 +3390,6 @@ O&amp;M allows sensors, methods, instruments, systems, algorithms and process ch
     <owl:Class rdf:about="http://purl.org/iot/vocab/m3-lite#HumanPresenceDetector">
         <rdfs:subClassOf rdf:resource="http://purl.org/iot/vocab/m3-lite#PresenceDetector"/>
         <rdfs:comment xml:lang="en">Device used to detect if an object (vehicle, room, place, etc.) is occupied by Human.</rdfs:comment>
-        <rdfs:label xml:lang="en"> Human Presence Detector</rdfs:label>
     </owl:Class>
     
 
@@ -4595,7 +4600,7 @@ O&amp;M allows sensors, methods, instruments, systems, algorithms and process ch
     <owl:Class rdf:about="http://purl.org/iot/vocab/m3-lite#PresenceDetector">
         <rdfs:subClassOf rdf:resource="http://purl.oclc.org/NET/ssnx/ssn#SensingDevice"/>
         <rdfs:comment xml:lang="en">Device used to detect if on object is occupied or not.</rdfs:comment>
-        <rdfs:label xml:lang="en">Presence Detector</rdfs:label>
+        <rdfs:label>Human Presence Detector</rdfs:label>
         <rdfs:seeAlso rdf:resource="http://casas.wsu.edu/owl/cose.owl#PassiveInfraredSensor"/>
     </owl:Class>
     
@@ -6366,6 +6371,50 @@ A Value of a Thing can have meta data</rdfs:comment>
     
 
 
+    <!-- http://purl.org/iot/ontology/fiesta-iot#HumanDetectorPresenceObsevation_01 -->
+
+    <owl:NamedIndividual rdf:about="http://purl.org/iot/ontology/fiesta-iot#HumanDetectorPresenceObsevation_01">
+        <rdf:type rdf:resource="http://purl.oclc.org/NET/ssnx/ssn#Observation"/>
+        <ssn:observationResult rdf:resource="http://purl.org/iot/ontology/fiesta-iot#HumanPresenceDetector_SO_01"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://purl.org/iot/ontology/fiesta-iot#HumanPresenceDetectorFull -->
+
+    <owl:NamedIndividual rdf:about="http://purl.org/iot/ontology/fiesta-iot#HumanPresenceDetectorFull">
+        <rdf:type rdf:resource="http://purl.org/iot/vocab/m3-lite#HumanPresenceDetector"/>
+        <ssn:madeObservation rdf:resource="http://purl.org/iot/ontology/fiesta-iot#HumanDetectorPresenceObsevation_01"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://purl.org/iot/ontology/fiesta-iot#HumanPresenceDetector_SO_01 -->
+
+    <owl:NamedIndividual rdf:about="http://purl.org/iot/ontology/fiesta-iot#HumanPresenceDetector_SO_01">
+        <rdf:type rdf:resource="http://purl.oclc.org/NET/ssnx/ssn#SensorOutput"/>
+        <ssn:hasValue rdf:resource="http://purl.org/iot/ontology/fiesta-iot#HumanPresenceSensorObserValue_01"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://purl.org/iot/ontology/fiesta-iot#HumanPresenceSensorObserValue_01 -->
+
+    <owl:NamedIndividual rdf:about="http://purl.org/iot/ontology/fiesta-iot#HumanPresenceSensorObserValue_01">
+        <rdf:type rdf:resource="http://purl.oclc.org/NET/ssnx/ssn#ObservationValue"/>
+        <dul:hasDataValue rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</dul:hasDataValue>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://purl.org/iot/ontology/fiesta-iot#ImageSensorAlert_01 -->
+
+    <owl:NamedIndividual rdf:about="http://purl.org/iot/ontology/fiesta-iot#ImageSensorAlert_01">
+        <rdf:type rdf:resource="http://purl.org/iot/vocab/m3-lite#ImageSensor"/>
+    </owl:NamedIndividual>
+    
+
+
     <!-- http://purl.org/iot/ontology/fiesta-iot#WaterFlow01 -->
 
     <owl:NamedIndividual rdf:about="http://purl.org/iot/ontology/fiesta-iot#WaterFlow01">
@@ -6424,6 +6473,15 @@ A Value of a Thing can have meta data</rdfs:comment>
         <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Variable"/>
     </rdf:Description>
     <rdf:Description rdf:about="http://purl.org/iot/ontology/fiesta-iot#value">
+        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Variable"/>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://purl.org/iot/ontology/fiesta-iot#sensorWarter">
+        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Variable"/>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://purl.org/iot/ontology/fiesta-iot#sensorWater">
+        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Variable"/>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://purl.org/iot/ontology/fiesta-iot#sensorPresence">
         <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Variable"/>
     </rdf:Description>
     <rdf:Description>
@@ -6528,6 +6586,116 @@ A Value of a Thing can have meta data</rdfs:comment>
                         <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#DatavaluedPropertyAtom"/>
                         <swrl:propertyPredicate rdf:resource="http://purl.org/iot/ontology/fiesta-iot#hasWaterFlow"/>
                         <swrl:argument1 rdf:resource="http://purl.org/iot/ontology/fiesta-iot#sensor"/>
+                        <swrl:argument2 rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</swrl:argument2>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+            </rdf:Description>
+        </swrl:head>
+    </rdf:Description>
+    <rdf:Description>
+        <swrla:isRuleEnabled rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</swrla:isRuleEnabled>
+        <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"></rdfs:comment>
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">S2</rdfs:label>
+        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Imp"/>
+        <swrl:body>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                        <swrl:propertyPredicate rdf:resource="http://purl.oclc.org/NET/ssnx/ssn#madeObservation"/>
+                        <swrl:argument1 rdf:resource="http://purl.org/iot/ontology/fiesta-iot#sensorPresence"/>
+                        <swrl:argument2 rdf:resource="http://purl.org/iot/ontology/fiesta-iot#mdobserv"/>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                        <rdf:first>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                <swrl:propertyPredicate rdf:resource="http://purl.oclc.org/NET/ssnx/ssn#hasValue"/>
+                                <swrl:argument1 rdf:resource="http://purl.org/iot/ontology/fiesta-iot#mdObservResult"/>
+                                <swrl:argument2 rdf:resource="http://purl.org/iot/ontology/fiesta-iot#outputSensor"/>
+                            </rdf:Description>
+                        </rdf:first>
+                        <rdf:rest>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                <rdf:first>
+                                    <rdf:Description>
+                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#DatavaluedPropertyAtom"/>
+                                        <swrl:propertyPredicate rdf:resource="http://www.loa.istc.cnr.it/ontologies/DUL.owl#hasDataValue"/>
+                                        <swrl:argument1 rdf:resource="http://purl.org/iot/ontology/fiesta-iot#outputSensor"/>
+                                        <swrl:argument2 rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</swrl:argument2>
+                                    </rdf:Description>
+                                </rdf:first>
+                                <rdf:rest>
+                                    <rdf:Description>
+                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                        <rdf:first>
+                                            <rdf:Description>
+                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                                                <swrl:classPredicate rdf:resource="http://purl.org/iot/ontology/fiesta-iot#Water_Flow"/>
+                                                <swrl:argument1 rdf:resource="http://purl.org/iot/ontology/fiesta-iot#sensorWarter"/>
+                                            </rdf:Description>
+                                        </rdf:first>
+                                        <rdf:rest>
+                                            <rdf:Description>
+                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                                <rdf:first>
+                                                    <rdf:Description>
+                                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                                                        <swrl:classPredicate rdf:resource="http://purl.org/iot/vocab/m3-lite#HumanPresenceDetector"/>
+                                                        <swrl:argument1 rdf:resource="http://purl.org/iot/ontology/fiesta-iot#sensorPresence"/>
+                                                    </rdf:Description>
+                                                </rdf:first>
+                                                <rdf:rest>
+                                                    <rdf:Description>
+                                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                                        <rdf:first>
+                                                            <rdf:Description>
+                                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                                                <swrl:propertyPredicate rdf:resource="http://purl.oclc.org/NET/ssnx/ssn#observationResult"/>
+                                                                <swrl:argument1 rdf:resource="http://purl.org/iot/ontology/fiesta-iot#mdobserv"/>
+                                                                <swrl:argument2 rdf:resource="http://purl.org/iot/ontology/fiesta-iot#mdObservResult"/>
+                                                            </rdf:Description>
+                                                        </rdf:first>
+                                                        <rdf:rest>
+                                                            <rdf:Description>
+                                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                                                <rdf:first>
+                                                                    <rdf:Description>
+                                                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#DatavaluedPropertyAtom"/>
+                                                                        <swrl:propertyPredicate rdf:resource="http://purl.org/iot/ontology/fiesta-iot#hasWaterFlow"/>
+                                                                        <swrl:argument1 rdf:resource="http://purl.org/iot/ontology/fiesta-iot#sensorWater"/>
+                                                                        <swrl:argument2 rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</swrl:argument2>
+                                                                    </rdf:Description>
+                                                                </rdf:first>
+                                                                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                                                            </rdf:Description>
+                                                        </rdf:rest>
+                                                    </rdf:Description>
+                                                </rdf:rest>
+                                            </rdf:Description>
+                                        </rdf:rest>
+                                    </rdf:Description>
+                                </rdf:rest>
+                            </rdf:Description>
+                        </rdf:rest>
+                    </rdf:Description>
+                </rdf:rest>
+            </rdf:Description>
+        </swrl:body>
+        <swrl:head>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#DatavaluedPropertyAtom"/>
+                        <swrl:propertyPredicate rdf:resource="http://purl.org/iot/ontology/fiesta-iot#hasAlert"/>
+                        <swrl:argument1 rdf:resource="http://purl.org/iot/ontology/fiesta-iot#ImageSensorAlert_01"/>
                         <swrl:argument2 rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</swrl:argument2>
                     </rdf:Description>
                 </rdf:first>
